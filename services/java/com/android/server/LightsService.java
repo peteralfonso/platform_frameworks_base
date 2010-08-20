@@ -61,6 +61,17 @@ public class LightsService {
 
     private final Light mLights[] = new Light[LIGHT_ID_COUNT];
 
+    private static final String FLASHLIGHT_FILE;
+    private static final String FLASHLIGHT_FILE_SPOTLIGHT = "/sys/class/leds/spotlight/brightness";
+    static {
+        File ff = new File(FLASHLIGHT_FILE_SPOTLIGHT);
+        if (ff.exists()) {
+            FLASHLIGHT_FILE = FLASHLIGHT_FILE_SPOTLIGHT;
+        } else {
+            FLASHLIGHT_FILE = "/sys/class/leds/flashlight/brightness";
+        }
+    }
+
     public final class Light {
 
         private Light(int id) {
@@ -140,8 +151,6 @@ public class LightsService {
      * IHardwareService API. This is expected to go away in the next release.
      */
     private final IHardwareService.Stub mLegacyFlashlightHack = new IHardwareService.Stub() {
-
-        private static final String FLASHLIGHT_FILE = "/sys/class/leds/spotlight/brightness";
 
         public boolean getFlashlightEnabled() {
             try {
