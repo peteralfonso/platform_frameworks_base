@@ -1596,7 +1596,7 @@ status_t OMXCodec::allocateBuffersOnPort(OMX_U32 portIndex) {
             def.nBufferCountActual, def.nBufferSize,
             portIndex == kPortIndexInput ? "input" : "output");
 
-    size_t totalSize = def.nBufferCountActual * def.nBufferSize;
+    size_t totalSize = def.nBufferCountActual * ((def.nBufferSize + 31) & (~31));
     mDealer[portIndex] = new MemoryDealer(totalSize, "OMXCodec");
 
     for (OMX_U32 i = 0; i < def.nBufferCountActual; ++i) {
