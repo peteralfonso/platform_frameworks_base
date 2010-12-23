@@ -1095,6 +1095,8 @@ status_t OMXCodec::getVideoProfileLevel(
     CODEC_LOGV("Default profile: %ld, level %ld",
             defaultProfileLevel.mProfile, defaultProfileLevel.mLevel);
 
+    return OK;
+
     // Are the default profile and level overwriten?
     int32_t profile, level;
     if (!meta->findInt32(kKeyVideoProfile, &profile)) {
