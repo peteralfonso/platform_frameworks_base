@@ -100,6 +100,10 @@ ifneq ($(TARGET_SIMULATOR),true)
 LOCAL_SHARED_LIBRARIES += libdl
 endif
 
+ifeq ($(BOARD_USE_YUV422I_DEFAULT_COLORFORMAT),true)
+	LOCAL_CFLAGS += -DUSE_YUV422I_DEFAULT_COLORFORMAT
+endif
+
 ifeq ($(TARGET_OS)-$(TARGET_SIMULATOR),linux-true)
         LOCAL_LDLIBS += -lpthread
 endif
