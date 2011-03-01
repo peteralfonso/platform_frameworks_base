@@ -38,6 +38,10 @@ ifeq ($(TARGET_SIMULATOR),true)
     LOCAL_LDLIBS += -lpthread
 endif
 
+ifeq ($(BOARD_NO_RGBX_8888),true)
+	LOCAL_CFLAGS += -DNO_RGBX_8888
+endif
+
 include $(BUILD_SHARED_LIBRARY)
 
 
