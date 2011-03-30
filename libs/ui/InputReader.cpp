@@ -743,9 +743,9 @@ int32_t InputDevice::getState(uint32_t sourceMask, int32_t code, GetStateFunc ge
     for (size_t i = 0; i < numMappers; i++) {
         InputMapper* mapper = mMappers[i];
         if (sourcesMatchMask(mapper->getSources(), sourceMask)) {
-            result = (mapper->*getStateFunc)(sourceMask, code);
-            if (result >= AKEY_STATE_DOWN) {
-                return result;
+            int32_t state = (mapper->*getStateFunc)(sourceMask, code);
+            if (state > result) {
+                result = state;
             }
         }
     }
