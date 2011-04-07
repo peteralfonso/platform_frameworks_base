@@ -2141,6 +2141,11 @@ void InputDispatcher::notifyMotion(nsecs_t eventTime, int32_t deviceId, int32_t 
     }
 
     policyFlags |= POLICY_FLAG_TRUSTED;
+    if ((source & AINPUT_SOURCE_CLASS_NAVIGATION) &&
+                    (action == AMOTION_EVENT_ACTION_DOWN || action == AMOTION_EVENT_ACTION_UP)) {
+            mPolicy->interceptNavigationButtonBeforeQueueing(eventTime, deviceId,
+                flags, action, policyFlags);
+    }
     mPolicy->interceptGenericBeforeQueueing(eventTime, /*byref*/ policyFlags);
 
     bool needWake;
