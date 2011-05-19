@@ -1610,7 +1610,7 @@ class PowerManagerService extends IPowerManager.Stub
         if (err == 0) {
             mLastScreenOnTime = (on ? SystemClock.elapsedRealtime() : 0);
             if (mUseSoftwareAutoBrightness) {
-                enableLightSensor(on && mAutoBrightessEnabled);
+                enableLightSensor(on);
                 if (!on) {
                     // make sure button and key backlights are off too
                     mButtonLight.turnOff();
@@ -1620,6 +1620,12 @@ class PowerManagerService extends IPowerManager.Stub
                     mLightSensorValue = -1;
                     // reset our highest light sensor value when the screen turns off
                     mHighestLightSensorValue = -1;
+                }
+                else if (!mAutoBrightessEnabled) {
+                    /* Force a light sensor reset since we enabled it
+                       when the screen came on */
+                    mAutoBrightessEnabled = true;
+                    setScreenBrightnessMode(Settings.System.SCREEN_BRIGHTNESS_MODE_MANUAL);
                 }
             }
         }
