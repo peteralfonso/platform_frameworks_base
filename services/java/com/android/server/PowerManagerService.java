@@ -53,6 +53,7 @@ import android.os.RemoteException;
 import android.os.ServiceManager;
 import android.os.SystemClock;
 import android.os.WorkSource;
+import android.os.SystemProperties;
 import android.provider.Settings.SettingNotFoundException;
 import android.provider.Settings;
 import android.util.EventLog;
@@ -1621,7 +1622,8 @@ class PowerManagerService extends IPowerManager.Stub
                     // reset our highest light sensor value when the screen turns off
                     mHighestLightSensorValue = -1;
                 }
-                else if (!mAutoBrightessEnabled) {
+                else if (!mAutoBrightessEnabled && SystemProperties.getBoolean(
+                    "ro.hardware.respect_als", false)) {
                     /* Force a light sensor reset since we enabled it
                        when the screen came on */
                     mAutoBrightessEnabled = true;
