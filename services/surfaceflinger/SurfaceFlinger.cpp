@@ -1059,10 +1059,13 @@ ssize_t SurfaceFlinger::addClientLayer(const sp<Client>& client,
 
 status_t SurfaceFlinger::removeLayer(const sp<LayerBase>& layer)
 {
+    status_t err = NAME_NOT_FOUND;
     Mutex::Autolock _l(mStateLock);
-    status_t err = purgatorizeLayer_l(layer);
-    if (err == NO_ERROR)
-        setTransactionFlags(eTransactionNeeded);
+    if (layer != 0) {
+        err = purgatorizeLayer_l(layer);
+        if (err == NO_ERROR)
+            setTransactionFlags(eTransactionNeeded);
+    }
     return err;
 }
 
@@ -1083,7 +1086,7 @@ status_t SurfaceFlinger::removeLayer_l(const sp<LayerBase>& layerBase)
 status_t SurfaceFlinger::purgatorizeLayer_l(const sp<LayerBase>& layerBase)
 {
     // remove the layer from the main list (through a transaction).
-    ssize_t err = removeLayer_l(layerBase);
+    status_t err = removeLayer_l(layerBase);
 
     layerBase->onRemoved();
 
