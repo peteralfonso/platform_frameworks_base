@@ -1182,6 +1182,10 @@ public final class BatteryStatsImpl extends BatteryStats {
         mBtHeadset = headset;
     }
 
+    public BluetoothHeadset getBtHeadset() {
+        return mBtHeadset;
+    }
+
     int mChangedStates = 0;
 
     void addHistoryRecordLocked(long curTime) {
