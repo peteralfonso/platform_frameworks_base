@@ -234,7 +234,7 @@ public final class BridgeResources extends Resources {
             try {
                 // check if the current parser can provide us with a custom parser.
                 if (mPlatformResourceFlag[0] == false) {
-                    parser = mProjectCallback.getParser(value);
+                    parser = mProjectCallback.getParser(value.getName());
                 }
 
                 // create a new one manually if needed.
