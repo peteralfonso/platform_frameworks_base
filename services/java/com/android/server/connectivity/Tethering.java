@@ -236,7 +236,7 @@ public class Tethering extends INetworkManagementEventObserver.Stub {
         synchronized (mIfaces) {
             TetherInterfaceSM sm = mIfaces.get(iface);
             if (sm != null) {
-                Log.e(TAG, "active iface (" + iface + ") reported as added, ignoring");
+                Log.w(TAG, "active iface (" + iface + ") reported as added, ignoring");
                 return;
             }
             sm = new TetherInterfaceSM(iface, mLooper, usb);
@@ -250,7 +250,7 @@ public class Tethering extends INetworkManagementEventObserver.Stub {
         synchronized (mIfaces) {
             TetherInterfaceSM sm = mIfaces.get(iface);
             if (sm == null) {
-                Log.e(TAG, "attempting to remove unknown iface (" + iface + "), ignoring");
+                Log.w(TAG, "attempting to remove unknown iface (" + iface + "), ignoring");
                 return;
             }
             sm.sendMessage(TetherInterfaceSM.CMD_INTERFACE_DOWN);
@@ -265,11 +265,11 @@ public class Tethering extends INetworkManagementEventObserver.Stub {
             sm = mIfaces.get(iface);
         }
         if (sm == null) {
-            Log.e(TAG, "Tried to Tether an unknown iface :" + iface + ", ignoring");
+            Log.w(TAG, "Tried to Tether an unknown iface :" + iface + ", ignoring");
             return ConnectivityManager.TETHER_ERROR_UNKNOWN_IFACE;
         }
         if (!sm.isAvailable() && !sm.isErrored()) {
-            Log.e(TAG, "Tried to Tether an unavailable iface :" + iface + ", ignoring");
+            Log.w(TAG, "Tried to Tether an unavailable iface :" + iface + ", ignoring");
             return ConnectivityManager.TETHER_ERROR_UNAVAIL_IFACE;
         }
         sm.sendMessage(TetherInterfaceSM.CMD_TETHER_REQUESTED);
@@ -283,11 +283,11 @@ public class Tethering extends INetworkManagementEventObserver.Stub {
             sm = mIfaces.get(iface);
         }
         if (sm == null) {
-            Log.e(TAG, "Tried to Untether an unknown iface :" + iface + ", ignoring");
+            Log.w(TAG, "Tried to Untether an unknown iface :" + iface + ", ignoring");
             return ConnectivityManager.TETHER_ERROR_UNKNOWN_IFACE;
         }
         if (sm.isErrored()) {
-            Log.e(TAG, "Tried to Untethered an errored iface :" + iface + ", ignoring");
+            Log.w(TAG, "Tried to Untethered an errored iface :" + iface + ", ignoring");
             return ConnectivityManager.TETHER_ERROR_UNAVAIL_IFACE;
         }
         sm.sendMessage(TetherInterfaceSM.CMD_TETHER_UNREQUESTED);
@@ -300,7 +300,7 @@ public class Tethering extends INetworkManagementEventObserver.Stub {
             sm = mIfaces.get(iface);
         }
         if (sm == null) {
-            Log.e(TAG, "Tried to getLastTetherError on an unknown iface :" + iface + ", ignoring");
+            Log.w(TAG, "Tried to getLastTetherError on an unknown iface :" + iface + ", ignoring");
             return ConnectivityManager.TETHER_ERROR_UNKNOWN_IFACE;
         }
         return sm.getLastError();
