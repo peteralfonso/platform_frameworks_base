@@ -166,7 +166,6 @@ public class Ringtone {
     }
     
     private void openMediaPlayer() throws IOException {
-        stop();
         mAudio = new MediaPlayer();
         if (mUri != null) {
             mAudio.setDataSource(mContext, mUri);
