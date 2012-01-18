@@ -45,6 +45,7 @@ public class SignalClusterView
     private int mMobileStrengthId = 0, mMobileActivityId = 0, mMobileTypeId = 0;
     private boolean mIsAirplaneMode = false;
     private String mWifiDescription, mMobileDescription, mMobileTypeDescription;
+    private boolean mHideMobileSignalOnWifi = false;
 
     ViewGroup mWifiGroup, mMobileGroup;
     ImageView mWifi, mMobile, mWifiActivity, mMobileActivity, mMobileType;
@@ -60,6 +61,8 @@ public class SignalClusterView
 
     public SignalClusterView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
+        mHideMobileSignalOnWifi = context.getResources().getBoolean(
+                com.android.internal.R.bool.config_hideMobileSignalOnWifi);
     }
 
     public void setNetworkController(NetworkController nc) {
@@ -160,9 +163,13 @@ public class SignalClusterView
                 String.format("mobile: %s sig=%d act=%d typ=%d",
                     (mMobileVisible ? "VISIBLE" : "GONE"),
                     mMobileStrengthId, mMobileActivityId, mMobileTypeId));
-
-        mMobileType.setVisibility(
-                !mWifiVisible ? View.VISIBLE : View.GONE);
+        
+        if (mHideMobileSignalOnWifi) {
+            // hide entire mobile signal cluster
+            mMobileGroup.setVisibility(!mWifiVisible ? View.VISIBLE : View.GONE);
+        } else {
+            // only hide signal type indicator
+            mMobileType.setVisibility(!mWifiVisible ? View.VISIBLE : View.GONE);
+        }
     }
 }
-

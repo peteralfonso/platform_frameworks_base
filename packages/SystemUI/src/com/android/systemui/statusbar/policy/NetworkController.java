@@ -28,6 +28,7 @@ import android.content.IntentFilter;
 import android.content.res.Resources;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.wifi.SupplicantState;
 import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
@@ -125,6 +126,7 @@ public class NetworkController extends BroadcastReceiver {
     private static final int INET_CONDITION_THRESHOLD = 50;
 
     private boolean mAirplaneMode = false;
+    private boolean mHideMobileSignalOnWifi = false;
 
     // our ui
     Context mContext;
@@ -228,6 +230,9 @@ public class NetworkController extends BroadcastReceiver {
 
         // yuck
         mBatteryStats = BatteryStatsService.getService();
+
+        mHideMobileSignalOnWifi = mContext.getResources().getBoolean(
+                com.android.internal.R.bool.config_hideMobileSignalOnWifi);
     }
 
     public void addPhoneSignalIconView(ImageView v) {
@@ -484,6 +489,12 @@ public class NetworkController extends BroadcastReceiver {
     }
 
     private final void updateDataNetType() {
+        if (mWifiConnected) {
+            if (mHideMobileSignalOnWifi) {
+              mDataTypeIconId = -1;
+              return;
+            }
+        }
         if (mIsWimaxEnabled && mWimaxConnected) {
             // wimax is a special 4g network not handled by telephony
             mDataIconList = TelephonyIcons.DATA_4G[mInetCondition];
