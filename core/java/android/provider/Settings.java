@@ -2194,6 +2194,79 @@ public final class Settings {
         @Deprecated
         public static final String WIFI_WATCHDOG_PING_TIMEOUT_MS =
             Secure.WIFI_WATCHDOG_PING_TIMEOUT_MS;
+
+        /**
+         * whether the device is a tablet (set by SystemUI)
+         * 
+         * @hide
+         */
+        public static final String IS_TABLET = "is_tablet";
+
+        /**
+         * Last state of the quick toggles, to restore on boot
+         * @hide
+         */
+        public static final String STATUSBAR_TOGGLES_VISIBILITY = "statusbar_toggles_visibility";
+
+        /**
+         * Whether to control brightness from status bar
+         * 
+         * @hide
+         */
+        public static final String STATUS_BAR_BRIGHTNESS_TOGGLE = "status_bar_brightness_toggle";
+
+        /**
+         * Settings button in drop down. Boolean value. 
+         * 0 = defualt, click for settings, longpress for toggles
+         * 1 = click for toggles, long press for settings
+         * 
+         * @hide
+         */
+        public static final String STATUSBAR_SETTINGS_BEHAVIOR = "statusbar_settings_behavior";
+
+        /**
+         * whether to auto-hide the toggles when the statusbar collapes. Boolean value.
+         * 
+         * @hide
+         */
+        public static final String STATUSBAR_QUICKTOGGLES_AUTOHIDE = "statusbar_quicktoggles_autohide";
+
+        /**
+         * @hide
+         */
+        public static final String STATUSBAR_TOGGLES = "statusbar_toggles";
+
+        /**
+         * What to display with the toggles.
+         * 1 = don't display text or icon
+         * 2 = display icon
+         * 3 = display text
+         * 4 = display text & icon
+         *
+         * @hide
+         */
+        public static final String STATUSBAR_TOGGLES_STYLE = "statusbar_toggles_style";
+
+        /**
+         * @hide
+         */
+        public static final String STATUSBAR_TOGGLES_BRIGHTNESS_LOC = "statusbar_toggles_brightness_loc";
+
+        /**
+         * Number of toggles to show in a row.
+         *
+         * @hide
+         */
+        public static final String STATUSBAR_TOGGLES_NUMBER_PER_ROW = "statusbar_toggles_number_per_row";
+
+        /**
+         * Whether to use the ToggleButton layout instead of the Switch layout for toggles
+         * 
+         * @hide
+         */
+        public static final String STATUSBAR_TOGGLES_USE_BUTTONS = "statusbar_toggles_use_buttons";
+
+
     }
 
     /**

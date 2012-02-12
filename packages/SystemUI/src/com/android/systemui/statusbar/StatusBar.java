@@ -56,6 +56,7 @@ public abstract class StatusBar extends SystemUI implements CommandQueue.Callbac
     protected abstract int getStatusBarGravity();
     public abstract int getStatusBarHeight();
     public abstract void animateCollapse();
+    public abstract boolean isTablet();
 
     private DoNotDisturb mDoNotDisturb;
 

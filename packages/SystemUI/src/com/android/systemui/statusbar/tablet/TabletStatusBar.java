@@ -49,6 +49,7 @@ import android.os.Message;
 import android.os.RemoteException;
 import android.os.ServiceManager;
 import android.os.storage.StorageManager;
+import android.provider.Settings;
 import android.text.TextUtils;
 import android.util.Slog;
 import android.view.accessibility.AccessibilityEvent;
@@ -71,6 +72,10 @@ import android.widget.RemoteViews;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import android.provider.Settings;
+import android.app.Activity;
+import android.util.Log;
+
 import com.android.internal.statusbar.StatusBarIcon;
 import com.android.internal.statusbar.StatusBarNotification;
 import com.android.systemui.R;
@@ -86,6 +91,7 @@ import com.android.systemui.statusbar.policy.CompatModeButton;
 import com.android.systemui.statusbar.policy.LocationController;
 import com.android.systemui.statusbar.policy.NetworkController;
 import com.android.systemui.statusbar.policy.Prefs;
+import com.android.systemui.statusbar.policy.toggles.TogglesView;
 
 public class TabletStatusBar extends StatusBar implements
         HeightReceiver.OnBarHeightChangedListener,
@@ -195,8 +201,11 @@ public class TabletStatusBar extends StatusBar implements
     private boolean mPanelSlightlyVisible;
 
     public Context getContext() { return mContext; }
+    
+    TogglesView mQuickToggles;
 
     private StorageManager mStorageManager;
+
 
     protected void addPanelWindows() {
         final Context context = mContext;
@@ -215,6 +224,10 @@ public class TabletStatusBar extends StatusBar implements
         mBatteryController.addLabelView(
                 (TextView)mNotificationPanel.findViewById(R.id.battery_text));
 
+        mQuickToggles = (TogglesView) mNotificationPanel.findViewById(R.id.quick_toggles);
+        mQuickToggles.setVisibility(View.VISIBLE);
+        mQuickToggles.setBar(this);
+        
         // Bt
         mBluetoothController.addIconView(
                 (ImageView)mNotificationPanel.findViewById(R.id.bluetooth));
@@ -401,6 +414,8 @@ public class TabletStatusBar extends StatusBar implements
     @Override
     public void start() {
         super.start(); // will add the main bar view
+
+        Settings.System.putInt(mContext.getContentResolver(), Settings.System.IS_TABLET, 1);
     }
 
     @Override
@@ -1916,6 +1931,10 @@ public class TabletStatusBar extends StatusBar implements
             }
             return false;
         }
+    }
+    
+    public boolean isTablet() {
+        return true;
     }
 
     public void dump(FileDescriptor fd, PrintWriter pw, String[] args) {
