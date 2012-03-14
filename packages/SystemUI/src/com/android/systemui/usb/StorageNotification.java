@@ -228,12 +228,12 @@ public class StorageNotification extends StorageEventListener {
             /*
              * Storage has been removed. Show nomedia media notification,
              * and disable UMS notification regardless of connection state.
-             */
             setMediaStorageNotification(
                     com.android.internal.R.string.ext_media_nomedia_notification_title,
                     com.android.internal.R.string.ext_media_nomedia_notification_message,
                     com.android.internal.R.drawable.stat_notify_sdcard_usb,
                     true, false, null);
+             */
             updateUsbMassStorageNotification(false);
         } else if (newState.equals(Environment.MEDIA_BAD_REMOVAL)) {
             /*
