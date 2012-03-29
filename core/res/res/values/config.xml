@@ -762,4 +762,7 @@
          [bootmode]:[original USB mode]:[USB mode used]-->
     <integer-array translatable="false" name="config_oemUsbModeOverride">
     </integer-array>
+
+    <!-- Hide mobile signal drawables when connected to Wi-Fi -->
+    <bool name="config_hideMobileSignalOnWifi">false</bool>
 </resources>
