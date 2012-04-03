@@ -77,6 +77,7 @@ class GlobalActions implements DialogInterface.OnDismissListener, DialogInterfac
 
     private SilentModeAction mSilentModeAction;
     private ToggleAction mAirplaneModeOn;
+    private ToggleAction mTorchToggle;
 
     private MyAdapter mAdapter;
 
@@ -84,6 +85,10 @@ class GlobalActions implements DialogInterface.OnDismissListener, DialogInterfac
     private boolean mDeviceProvisioned = false;
     private ToggleAction.State mAirplaneState = ToggleAction.State.Off;
     private boolean mIsWaitingForEcmExit = false;
+    private boolean mEnableTorchToggle = true;
+
+    public static final String INTENT_TORCH_ON = "com.android.systemui.INTENT_TORCH_ON";
+    public static final String INTENT_TORCH_OFF = "com.android.systemui.INTENT_TORCH_OFF";
 
     /**
      * @param context everything needs a context :(
@@ -156,6 +161,34 @@ class GlobalActions implements DialogInterface.OnDismissListener, DialogInterfac
                         SystemProperties.get(TelephonyProperties.PROPERTY_INECM_MODE)))) {
                     mState = buttonOn ? State.TurningOn : State.TurningOff;
                     mAirplaneState = mState;
+                }
+            }
+
+            public boolean showDuringKeyguard() {
+                return true;
+            }
+
+            public boolean showBeforeProvisioning() {
+                return false;
+            }
+        };
+
+        mTorchToggle = new ToggleAction(
+                R.drawable.ic_lock_torch,
+                R.drawable.ic_lock_torch,
+                R.string.global_actions_toggle_torch,
+                R.string.global_actions_torch_on_status,
+                R.string.global_actions_torch_off_status) {
+
+            void onToggle(boolean on) {
+                if (on) {
+                    Intent i = new Intent(INTENT_TORCH_ON);
+                    i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    mContext.startActivity(i);
+                } else {
+                    Intent i = new Intent(INTENT_TORCH_OFF);
+                    i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    mContext.startActivity(i);
                 }
             }
 

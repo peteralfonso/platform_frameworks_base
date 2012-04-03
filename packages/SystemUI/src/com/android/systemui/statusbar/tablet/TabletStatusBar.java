@@ -169,7 +169,7 @@ public class TabletStatusBar extends StatusBar implements
     ViewGroup mPile;
 
     HeightReceiver mHeightReceiver;
-    BatteryController mBatteryController;
+//    BatteryController mBatteryController;
     BluetoothController mBluetoothController;
     LocationController mLocationController;
     NetworkController mNetworkController;
@@ -220,9 +220,9 @@ public class TabletStatusBar extends StatusBar implements
                 new TouchOutsideListener(MSG_CLOSE_NOTIFICATION_PANEL, mNotificationPanel));
 
         // the battery icon
-        mBatteryController.addIconView((ImageView)mNotificationPanel.findViewById(R.id.battery));
-        mBatteryController.addLabelView(
-                (TextView)mNotificationPanel.findViewById(R.id.battery_text));
+//        mBatteryController.addIconView((ImageView)mNotificationPanel.findViewById(R.id.battery));
+//        mBatteryController.addLabelView(
+//                (TextView)mNotificationPanel.findViewById(R.id.battery_text));
 
         mQuickToggles = (TogglesView) mNotificationPanel.findViewById(R.id.quick_toggles);
         mQuickToggles.setVisibility(View.VISIBLE);
@@ -509,8 +509,8 @@ public class TabletStatusBar extends StatusBar implements
         // The icons
         mLocationController = new LocationController(mContext); // will post a notification
 
-        mBatteryController = new BatteryController(mContext);
-        mBatteryController.addIconView((ImageView)sb.findViewById(R.id.battery));
+//        mBatteryController = new BatteryController(mContext);
+//        mBatteryController.addIconView((ImageView)sb.findViewById(R.id.battery));
         mBluetoothController = new BluetoothController(mContext);
         mBluetoothController.addIconView((ImageView)sb.findViewById(R.id.bluetooth));
 
