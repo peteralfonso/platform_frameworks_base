@@ -469,7 +469,10 @@ public class TelephonyManager {
             return NETWORK_TYPE_UNKNOWN;
         }
     }
-    
+
+    /**
+    * {@hide} 
+    */    
     public void toggleLTE(boolean on) {
         try {
             getITelephony().toggleLTE(on);

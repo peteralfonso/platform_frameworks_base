@@ -1366,6 +1366,7 @@ public final class Settings {
          * If 0, the compatibility mode is off for all applications.
          * If 1, older applications run under compatibility mode.
          * TODO: remove this settings before code freeze (bug/1907571)
+         *
          * @hide
          */
         public static final String COMPATIBILITY_MODE = "compatibility_mode";
@@ -1382,6 +1383,7 @@ public final class Settings {
 
         /**
          * Control whether to enable automatic backlight dim.
+         * @hide
          */
         public static final String SCREEN_BRIGHTNESS_AUTO_DIM = "screen_brightness_auto_dim";
 
