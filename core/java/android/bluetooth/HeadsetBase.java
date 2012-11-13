@@ -109,12 +109,6 @@ public final class HeadsetBase {
 
     private native void initializeNativeDataNative(int socketFd);
 
-    // interface for dealing with special input situations
-    public interface SpecialPDUInputHandler {
-        void handleInput(String input);
-    }
-    public SpecialPDUInputHandler specialPDUInputHandler = null;
-
     /* Process an incoming AT command line
      */
     protected void handleInput(String input) {
@@ -164,20 +158,10 @@ public final class HeadsetBase {
                 public void run() {
                     int last_read_error;
                     while (!mEventThreadInterrupted) {
-
-                        String input;
-                        if (null == specialPDUInputHandler) {
-                            input = readNative(500);
-                            if (input != null) {
-                                handleInput(input);
-                            }
+                        String input = readNative(500);
+                        if (input != null) {
+                            handleInput(input);
                         } else {
-                            input = readNativePDUStream((500));
-                            if (input != null) {
-                                specialPDUInputHandler.handleInput(input);
-                            }
-                        }
-                        if (null == input) {
                             last_read_error = getLastReadStatusNative();
                             if (last_read_error != 0) {
                                 Log.i(TAG, "headset read error " + last_read_error);
@@ -197,7 +181,6 @@ public final class HeadsetBase {
     }
 
     private native String readNative(int timeout_ms);
-    private native String readNativePDUStream(int timeout_ms);
     private native int getLastReadStatusNative();
 
     private void stopEventThread() {
@@ -292,15 +275,6 @@ public final class HeadsetBase {
         return true;
     }
     private native boolean sendURCNative(String urc);
-    private native boolean sendURCNativeChars(String urc);
-
-    public synchronized boolean sendURCChars(String urc) {
-        if (urc.length() > 0) {
-            boolean ret = sendURCNativeChars(urc);
-            return ret;
-        }
-        return true;
-    }
 
     private synchronized void acquireWakeLock() {
         if (!mWakeLock.isHeld()) {
